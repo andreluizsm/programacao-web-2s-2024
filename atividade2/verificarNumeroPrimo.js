@@ -1,5 +1,6 @@
 function verificaNumeroPrimo(n){
     let state = false;
+    
     if(n <= 1){
         state = true;
     }
