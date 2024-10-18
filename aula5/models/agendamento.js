@@ -4,7 +4,7 @@ const db =  require('../db');
 const Agendamento = db.define('agendamento', {
     id: {
         type: Sequelize.INTEGER,
-        autoIncremente: true,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },

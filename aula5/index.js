@@ -1,9 +1,8 @@
 const express = require('express');
 const mustacheExpress = require('mustache-express');
-const  postDados = require('./controllers/formController');
-const app = express();
 const db = require('./db');
 
+const app = express();
 
 app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
