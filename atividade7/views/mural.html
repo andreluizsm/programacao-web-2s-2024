@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Mensagens</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <header>
+            <h1 class="mb-4">Central de Mensagens</h1>
+            <div class="d-flex gap-2">
+                <a href="/mensagem/cadastro" class="btn btn-primary">Adicionar Mensagem</a>
+                <a href="/logout" class="btn btn-warning">Encerrar Sessão</a>
+            </div>
+        </header>
+        <main id="mural" class="row mt-4">
+            <!-- Mensagens carregadas dinamicamente -->
+        </main>
+    </div>
+
+    <script>
+        async function obterMensagens() {
+            try {
+                const resposta = await fetch('/api/mensagens');
+                const listaMensagens = await resposta.json();
+
+                const mural = document.getElementById('mural');
+                mural.innerHTML = ''; 
+
+                listaMensagens.forEach(mensagem => {
+                    const cardMensagem = document.createElement('div');
+                    cardMensagem.className = 'col-12 mb-4';
+                    cardMensagem.innerHTML = `
+                        <article class="p-3 border rounded shadow-sm">
+                            <h3>${mensagem.titulo}</h3>
+                            <p><small><strong>Enviado por:</strong> ${mensagem.usuario ? mensagem.usuario.nome : 'Anônimo'}</small></p>
+                            <p>${mensagem.conteudo}</p>
+                            <a href="/mensagem/${mensagem.id}" class="btn btn-outline-secondary btn-sm">Ver Mais</a>
+                        </article>
+                    `;
+                    mural.appendChild(cardMensagem);
+                });
+            } catch (erro) {
+                console.error("Erro ao carregar as mensagens:", erro);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', obterMensagens);
+    </script>
+</body>
+</html>
